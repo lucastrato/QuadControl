@@ -1,6 +1,7 @@
 {
     "cmake.sourceDirectory": "/workspace/src/quadcontrol_core",
-    "cmake.useCMakePresets": "always",
+    "cmake.useCMakePresets": "never",
+    "cmake.configureOnEdit": false,
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.formatOnType": true

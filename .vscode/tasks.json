@@ -17,7 +17,9 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "problemMatcher": []
+            "problemMatcher": [
+                "$gcc"
+            ]
         },
         {
             "label": "QuadControl: Static Analysis",
@@ -26,6 +28,21 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "QuadControl: Test",
+            "type": "shell",
+            "command": "source /opt/ros/jazzy/setup.bash && colcon test --event-handlers console_direct+ && colcon test-result --verbose",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": [
+                "QuadControl: Build"
+            ],
+            "dependsOrder": "sequence",
             "problemMatcher": []
         },
         {
@@ -35,9 +52,7 @@
                 "QuadControl: Build"
             ],
             "dependsOrder": "sequence",
-            "problemMatcher": [
-                "$gcc"
-            ]
+            "problemMatcher": []
         }
     ]
 }

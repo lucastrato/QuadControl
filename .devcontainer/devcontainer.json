@@ -8,7 +8,10 @@
             "extensions": [
                 "ms-vscode.cpptools",
                 "ms-vscode.cmake-tools",
-                "llvm-vs-code-extensions.vscode-clangd"
+                "llvm-vs-code-extensions.vscode-clangd",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "GitHub.vscode-github-actions"
             ]
         }
     }

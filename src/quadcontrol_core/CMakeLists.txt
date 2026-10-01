@@ -15,7 +15,6 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
-find_package(ament_cmake_gtest REQUIRED)
 
 add_executable(controller src/controller.cpp)
 target_include_directories(controller PRIVATE include)
@@ -44,6 +43,9 @@ if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   ament_add_gtest(test_counter test/test_counter.cpp)
   target_include_directories(test_counter PRIVATE include)
+
+  find_package(launch_testing_ament_cmake REQUIRED)
+  add_launch_test(test/test_nodes_launch.py TIMEOUT 60)
 
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

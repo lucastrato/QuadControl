@@ -43,7 +43,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Python3 dedicated virtual environment for build dependencies
-RUN python3 -m venv /opt/colcon-venv
+RUN python3 -m venv --system-site-packages /opt/colcon-venv
 
 RUN /opt/colcon-venv/bin/pip install \
     colcon-common-extensions
