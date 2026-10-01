@@ -8,14 +8,11 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-24.04
+    container:
+      image: ghcr.io/ros-tooling/setup-ros-docker/ubuntu-noble-ros-jazzy-ros-base
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
-      - name: Set up ROS 2 Jazzy
-        uses: ros-tooling/setup-ros@v0.7
-        with:
-          required-ros-distributions: jazzy
 
       - name: Build and test package
         uses: ros-tooling/action-ros-ci@v0.3
@@ -25,14 +22,11 @@ jobs:
 
   sanitizers:
     runs-on: ubuntu-24.04
+    container:
+      image: ghcr.io/ros-tooling/setup-ros-docker/ubuntu-noble-ros-jazzy-ros-base
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
-      - name: Set up ROS 2 Jazzy
-        uses: ros-tooling/setup-ros@v0.7
-        with:
-          required-ros-distributions: jazzy
 
       - name: Install package dependencies
         run: |
@@ -54,19 +48,16 @@ jobs:
 
   coverage:
     runs-on: ubuntu-24.04
+    container:
+      image: ghcr.io/ros-tooling/setup-ros-docker/ubuntu-noble-ros-jazzy-ros-base
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up ROS 2 Jazzy
-        uses: ros-tooling/setup-ros@v0.7
-        with:
-          required-ros-distributions: jazzy
-
       - name: Install coverage and package dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install --yes gcovr
+          apt-get update
+          apt-get install --yes gcovr
           source /opt/ros/jazzy/setup.bash
           rosdep update
           rosdep install --from-paths src --ignore-src -r -y --rosdistro jazzy
