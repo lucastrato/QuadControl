@@ -46,6 +46,15 @@
             "problemMatcher": []
         },
         {
+            "label": "QuadControl: Coverage",
+            "type": "shell",
+            "command": "source /opt/ros/jazzy/setup.bash && colcon --log-base log/coverage build --packages-up-to quadcontrol_core --build-base build/coverage --install-base install/coverage --cmake-args -DCMAKE_BUILD_TYPE=Debug -DQUADCONTROL_ENABLE_COVERAGE=ON && colcon --log-base log/coverage test --packages-select quadcontrol_core --build-base build/coverage --install-base install/coverage --event-handlers console_direct+ && colcon test-result --test-result-base build/coverage --verbose && gcovr --root . --filter 'src/quadcontrol_core/(src|include)/.*' --txt-summary --xml-pretty --xml build/coverage/coverage.xml && python3 src/quadcontrol_core/test/merge_test_coverage.py --test-results-dir build/coverage/quadcontrol_core/test_results/quadcontrol_core --coverage-xml build/coverage/coverage.xml --output build/coverage/test-and-coverage.xml --html-output build/coverage/test-and-coverage.html",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "QuadControl: Clean And Build",
             "dependsOn": [
                 "QuadControl: Clean",

@@ -74,12 +74,19 @@ jobs:
           colcon test --packages-select quadcontrol_core --event-handlers console_direct+
           colcon test-result --verbose
           gcovr --root . --filter 'src/quadcontrol_core/(src|include)/.*' \
-            --txt-summary --xml-pretty --xml coverage.xml
+            --txt-summary --xml-pretty --xml build/quadcontrol_core/coverage.xml
+          python3 src/quadcontrol_core/test/merge_test_coverage.py \
+            --test-results-dir build/quadcontrol_core/test_results/quadcontrol_core \
+            --coverage-xml build/quadcontrol_core/coverage.xml \
+            --output build/quadcontrol_core/test-and-coverage.xml \
+            --html-output build/quadcontrol_core/test-and-coverage.html
 
-      - name: Upload coverage report
+      - name: Upload combined test and coverage report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: quadcontrol-coverage
-          path: coverage.xml
+          name: quadcontrol-test-and-coverage
+          path: |
+            build/quadcontrol_core/test-and-coverage.xml
+            build/quadcontrol_core/test-and-coverage.html
           if-no-files-found: ignore

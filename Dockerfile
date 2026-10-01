@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ros:jazzy-ros-base
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -12,22 +12,11 @@ RUN apt-get update && apt-get install -y \
     clang-format \
     clang-tidy \
     curl \
+    gcovr \
     lsb-release \
     software-properties-common \
     python3-pip \
     python3-venv \
-    && rm -rf /var/lib/apt/lists/*
-
-# ROS 2 repository
-RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \
-    -o /usr/share/keyrings/ros-archive-keyring.gpg
-
-RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" \
-    > /etc/apt/sources.list.d/ros2.list
-
-# ROS 2 Jazzy
-RUN apt-get update && apt-get install -y \
-    ros-jazzy-desktop \
     && rm -rf /var/lib/apt/lists/*
 
 # Gazebo Harmonic repository
