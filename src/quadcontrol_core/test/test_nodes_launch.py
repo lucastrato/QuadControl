@@ -2,6 +2,7 @@ import time
 import unittest
 
 import launch
+from launch.substitutions import LaunchConfiguration
 import launch_ros.actions
 import launch_testing
 import launch_testing.actions
@@ -14,13 +15,11 @@ from std_srvs.srv import SetBool
 def generate_test_description():
     # Exercise the installed nodes together through the real ROS graph.
     controller = launch_ros.actions.Node(
-        package='quadcontrol_core',
-        executable='controller',
+        executable=LaunchConfiguration('controller_executable'),
         output='screen',
     )
     monitor = launch_ros.actions.Node(
-        package='quadcontrol_core',
-        executable='monitor',
+        executable=LaunchConfiguration('monitor_executable'),
         output='screen',
     )
 
@@ -33,9 +32,10 @@ def generate_test_description():
 
 
 class TestControllerMonitor(unittest.TestCase):
+
     @classmethod
     def setUpClass(cls):
-        rclpy.init()
+        rclpy.init(args=[])
         cls.node = rclpy.create_node('counter_integration_test')
         cls.received_values = []
 
@@ -92,5 +92,6 @@ class TestControllerMonitor(unittest.TestCase):
 
 @launch_testing.post_shutdown_test()
 class TestNodesShutdown(unittest.TestCase):
+
     def test_nodes_exit_cleanly(self, proc_info):
         launch_testing.asserts.assertExitCodes(proc_info)

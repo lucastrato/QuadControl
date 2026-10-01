@@ -45,7 +45,13 @@ if(BUILD_TESTING)
   target_include_directories(test_counter PRIVATE include)
 
   find_package(launch_testing_ament_cmake REQUIRED)
-  add_launch_test(test/test_nodes_launch.py TIMEOUT 60)
+  add_launch_test(
+    test/test_nodes_launch.py
+    TIMEOUT 60
+    ARGS
+    "controller_executable:=$<TARGET_FILE:controller>"
+    "monitor_executable:=$<TARGET_FILE:monitor>"
+  )
 
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
