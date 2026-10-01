@@ -13,7 +13,7 @@
         {
             "label": "QuadControl: Build",
             "type": "shell",
-            "command": "colcon build --cmake-args -DCMAKE_BUILD_TYPE=Debug",
+            "command": "source /opt/ros/jazzy/setup.bash && colcon build --cmake-args -DCMAKE_BUILD_TYPE=Debug",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -22,7 +22,7 @@
         {
             "label": "QuadControl: Static Analysis",
             "type": "shell",
-            "command": "colcon build --cmake-args -DCMAKE_BUILD_TYPE=StaticAnalysis",
+            "command": "source /opt/ros/jazzy/setup.bash && colcon build --cmake-args -DCMAKE_BUILD_TYPE=StaticAnalysis",
             "options": {
                 "cwd": "${workspaceFolder}"
             },

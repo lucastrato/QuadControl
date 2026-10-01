@@ -1,6 +1,7 @@
 #include <chrono>
 #include <memory>
 
+#include <quadcontrol_core/counter.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/int32.hpp>
 #include <std_srvs/srv/set_bool.hpp>
@@ -30,7 +31,7 @@ private:
     const std::shared_ptr<std_srvs::srv::SetBool::Request> request,
     const std::shared_ptr<std_srvs::srv::SetBool::Response> response)
   {
-    reset_requested_ = request->data;
+    counter_.set_reset_requested(request->data);
     response->success = request->data;
     response->message =
       request->data ? "Counter reset requested" : "Counter request was false";
@@ -38,19 +39,13 @@ private:
 
   void publish_counter()
   {
-    if (reset_requested_) {
-      counter_ = 0;
-      reset_requested_ = false;
-    }
-
     std_msgs::msg::Int32 message;
-    message.data = counter_++;
+    message.data = counter_.next_value();
     RCLCPP_INFO(get_logger(), "Control loop %d", message.data);
     publisher_->publish(message);
   }
 
-  bool reset_requested_{false};
-  int counter_{0};
+  Counter counter_;
   rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr publisher_;
   rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr service_;
   rclcpp::TimerBase::SharedPtr timer_;

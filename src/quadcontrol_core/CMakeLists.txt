@@ -15,8 +15,10 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
+find_package(ament_cmake_gtest REQUIRED)
 
 add_executable(controller src/controller.cpp)
+target_include_directories(controller PRIVATE include)
 add_executable(monitor src/monitor.cpp)
 
 ament_target_dependencies(
@@ -39,6 +41,10 @@ install(TARGETS
 )
 
 if(BUILD_TESTING)
+  find_package(ament_cmake_gtest REQUIRED)
+  ament_add_gtest(test_counter test/test_counter.cpp)
+  target_include_directories(test_counter PRIVATE include)
+
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
   # comment the line when a copyright and license is added to all source files
