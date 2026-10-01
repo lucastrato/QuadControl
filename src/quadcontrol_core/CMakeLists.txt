@@ -10,6 +10,26 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+option(QUADCONTROL_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
+option(QUADCONTROL_ENABLE_COVERAGE "Enable GCC coverage instrumentation" OFF)
+
+if(QUADCONTROL_ENABLE_SANITIZERS AND QUADCONTROL_ENABLE_COVERAGE)
+  message(FATAL_ERROR "Sanitizers and coverage instrumentation must use separate builds")
+elseif(QUADCONTROL_ENABLE_SANITIZERS)
+  if(NOT CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    message(FATAL_ERROR "Sanitizers require GCC or Clang")
+  endif()
+  add_compile_options(-fsanitize=address,undefined -fno-omit-frame-pointer)
+  set(CMAKE_EXE_LINKER_FLAGS
+      "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address,undefined")
+elseif(QUADCONTROL_ENABLE_COVERAGE)
+  if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    message(FATAL_ERROR "Coverage instrumentation currently requires GCC")
+  endif()
+  add_compile_options(--coverage -O0 -g)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+endif()
+
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
