@@ -9,7 +9,7 @@ jobs:
   build-and-test:
     runs-on: ubuntu-24.04
     container:
-      image: ghcr.io/ros-tooling/setup-ros-docker/ubuntu-noble-ros-jazzy-ros-base
+      image: ros:jazzy-ros-base
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -23,7 +23,7 @@ jobs:
   sanitizers:
     runs-on: ubuntu-24.04
     container:
-      image: ghcr.io/ros-tooling/setup-ros-docker/ubuntu-noble-ros-jazzy-ros-base
+      image: ros:jazzy-ros-base
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -49,7 +49,7 @@ jobs:
   coverage:
     runs-on: ubuntu-24.04
     container:
-      image: ghcr.io/ros-tooling/setup-ros-docker/ubuntu-noble-ros-jazzy-ros-base
+      image: ros:jazzy-ros-base
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
