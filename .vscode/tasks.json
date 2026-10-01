@@ -1,0 +1,43 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "QuadControl: Clean",
+            "type": "shell",
+            "command": "rm -rf build install log src/quadcontrol_core/build src/quadcontrol_core/install src/quadcontrol_core/log",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "QuadControl: Build",
+            "type": "shell",
+            "command": "colcon build --cmake-args -DCMAKE_BUILD_TYPE=Debug",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "QuadControl: Static Analysis",
+            "type": "shell",
+            "command": "colcon build --cmake-args -DCMAKE_BUILD_TYPE=StaticAnalysis",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "QuadControl: Clean And Build",
+            "dependsOn": [
+                "QuadControl: Clean",
+                "QuadControl: Build"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+services:
+  quadcontrol-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: quadcontrol-dev
+
+    volumes:
+      - .:/workspace
+
+    working_dir: /workspace
+
+    stdin_open: true
+    tty: true

@@ -1,0 +1,12 @@
+# ROS 2 / colcon build artifacts
+/build/
+/install/
+/log/
+/src/*/build/
+/src/*/install/
+/src/*/log/
+/compile_commands.json
+**/.cache/
+
+# Local operating-system files
+.DS_Store
