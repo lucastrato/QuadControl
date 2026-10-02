@@ -32,17 +32,23 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Setup ROS2 package
-        uses: ros-tooling/setup-ros@v0.7
-        with:
-          required-ros-distributions: jazzy
+      - name: Install package dependencies
+        shell: bash
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          rosdep update
+          rosdep install --from-paths src --ignore-src -r -y --rosdistro jazzy
 
       - name: Build with AddressSanitizer and UndefinedBehaviorSanitizer
+        shell: bash
         run: |
+          source /opt/ros/jazzy/setup.bash
           colcon build --packages-up-to quadcontrol_core \
             --cmake-args -DCMAKE_BUILD_TYPE=Debug -DQUADCONTROL_ENABLE_SANITIZERS=ON
 
       - name: Run tests with sanitizers
+        shell: bash
         run: |
+          source /opt/ros/jazzy/setup.bash
           colcon test --packages-select quadcontrol_core --event-handlers console_direct+
           colcon test-result --verbose
