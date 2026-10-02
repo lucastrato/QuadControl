@@ -32,9 +32,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Install package dependencies
-        run: |
-          source /opt/ros/jazzy/setup.bash
+      - name: Setup ROS2 package
+        uses: ros-tooling/setup-ros@v0.7
+        with:
+          required-ros-distributions: jazzy
 
       - name: Build with AddressSanitizer and UndefinedBehaviorSanitizer
         run: |
