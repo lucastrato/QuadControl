@@ -39,12 +39,10 @@ jobs:
 
       - name: Build with AddressSanitizer and UndefinedBehaviorSanitizer
         run: |
-          source /opt/ros/jazzy/setup.bash
           colcon build --packages-up-to quadcontrol_core \
             --cmake-args -DCMAKE_BUILD_TYPE=Debug -DQUADCONTROL_ENABLE_SANITIZERS=ON
 
       - name: Run tests with sanitizers
         run: |
-          source /opt/ros/jazzy/setup.bash
           colcon test --packages-select quadcontrol_core --event-handlers console_direct+
           colcon test-result --verbose
