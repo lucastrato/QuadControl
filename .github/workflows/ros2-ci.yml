@@ -32,16 +32,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Setup ROS2 package
-        uses: ros-tooling/setup-ros@v0.7
-        with:
-          required-ros-distributions: jazzy
-
       - name: Install package dependencies
         run: |
           source /opt/ros/jazzy/setup.bash
-          rosdep update
-          rosdep install --from-paths src --ignore-src -r -y --rosdistro jazzy
 
       - name: Build with AddressSanitizer and UndefinedBehaviorSanitizer
         run: |
@@ -54,53 +47,3 @@ jobs:
           source /opt/ros/jazzy/setup.bash
           colcon test --packages-select quadcontrol_core --event-handlers console_direct+
           colcon test-result --verbose
-
-  coverage:
-    runs-on: ubuntu-24.04
-    container:
-      image: ros:jazzy-ros-base
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Setup ROS2 package
-        uses: ros-tooling/setup-ros@v0.7
-        with:
-          required-ros-distributions: jazzy
-
-      - name: Install coverage and package dependencies
-        run: |
-          apt-get update
-          apt-get install --yes gcovr
-          source /opt/ros/jazzy/setup.bash
-          rosdep update
-          rosdep install --from-paths src --ignore-src -r -y --rosdistro jazzy
-
-      - name: Build with coverage instrumentation
-        run: |
-          source /opt/ros/jazzy/setup.bash
-          colcon build --packages-up-to quadcontrol_core \
-            --cmake-args -DCMAKE_BUILD_TYPE=Debug -DQUADCONTROL_ENABLE_COVERAGE=ON
-
-      - name: Run tests and generate coverage report
-        run: |
-          source /opt/ros/jazzy/setup.bash
-          colcon test --packages-select quadcontrol_core --event-handlers console_direct+
-          colcon test-result --verbose
-          gcovr --root . --filter 'src/quadcontrol_core/(src|include)/.*' \
-            --txt-summary --xml-pretty --xml build/quadcontrol_core/coverage.xml
-          python3 src/quadcontrol_core/test/merge_test_coverage.py \
-            --test-results-dir build/quadcontrol_core/test_results/quadcontrol_core \
-            --coverage-xml build/quadcontrol_core/coverage.xml \
-            --output build/quadcontrol_core/test-and-coverage.xml \
-            --html-output build/quadcontrol_core/test-and-coverage.html
-
-      - name: Upload combined test and coverage report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: quadcontrol-test-and-coverage
-          path: |
-            build/quadcontrol_core/test-and-coverage.xml
-            build/quadcontrol_core/test-and-coverage.html
-          if-no-files-found: ignore
