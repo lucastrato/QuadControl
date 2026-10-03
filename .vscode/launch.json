@@ -1,0 +1,55 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Controller",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/workspace/install/quadcontrol_core/lib/quadcontrol_core/controller",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "/workspace",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pending breakpoints",
+                    "text": "set breakpoint pending on",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Debug Monitor",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/workspace/install/quadcontrol_core/lib/quadcontrol_core/monitor",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "/workspace",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pending breakpoints",
+                    "text": "set breakpoint pending on",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}
