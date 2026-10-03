@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     software-properties-common \
     python3-pip \
     python3-venv \
+    doxygen \
     && rm -rf /var/lib/apt/lists/*
 
 # Gazebo Harmonic repository

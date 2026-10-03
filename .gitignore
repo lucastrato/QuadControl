@@ -2,6 +2,7 @@
 /build/
 /install/
 /log/
+/src/*/docs/
 /src/*/build/
 /src/*/install/
 /src/*/log/

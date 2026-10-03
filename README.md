@@ -1,2 +1,0 @@
-# QuadControl
-QuadControl Software
